@@ -20,14 +20,14 @@ system = []
 pix = []
 period = []
 locs = []
-counter = []
-
+counter =[]
 def initUni(diam):
     # initialize the cosmos and names arrays
     global cosmos
     global system
     global dia
-
+    cosmos = []
+    system = []
     dia = diam
     for x in range(diam):
         if random.randrange(100) > 60:
@@ -70,7 +70,7 @@ def mvplanet(planet):
 def setsys(star,sysn):
     global pix, period, locs, counter
     val = (5 * (star * star) * (sysn * sysn))%255
-    pix = [(val, 0, 255), (0,00,val),(99, val, 156), (99, 0, val)]
+    pix = [(val, 0, 100), (0,00,val),(99, val, 80), (30, 0, val)]
     period = [val / 2, val, val * 1.5, val * 4]
     locs = [random.randrange(10), random.randrange(10) ,random.randrange(10),random.randrange(10)]
     counter = [0,0,0,0]
@@ -100,6 +100,13 @@ state = move
 ship = 0
 
 while True:
+    if cp.shake(shake_threshold=15):
+        cp.pixels.fill((0,100,0))
+        time.sleep(1)
+        print("reset")
+        initUni(100)
+
+    
     if state == explore:
 #        clearplanets()
         orrery()
@@ -108,21 +115,23 @@ while True:
         time.sleep(.2)
         showspace(loc)
     val = 0
-    if cp.button_a:
-        val = 1
-        if cp.button_b:
-            val = 3
-    if cp.button_b:
+    if cp.button_a and cp.button_b:
+        val = 3
+        time.sleep(.1)
+    elif cp.button_a:
+            val = 1
+            time.sleep(.1)
+    elif cp.button_b:
         val = 2
-        if cp.button_a:
-            val = 3
-
+        time.sleep(.1)
     if val == 3:
         state = state +1
         if state > explore:
             state = move
         print("State:",snames[state])
         time.sleep(.5)
+        if state == explore:
+            clearplanets()
 
         if state == explore:
             if cosmos[loc+ship]==0:
@@ -138,7 +147,8 @@ while True:
         if val == 2:
             speed = speed - 1
             time.sleep(.1)
-        loc = ((loc + speed) + dia)%dia
+        loc = ((loc + speed) + dia)%dia 
+
     if state == stop:
         save = cp.pixels[ship]
         cp.pixels[ship] = (10,10,10)
@@ -152,3 +162,10 @@ while True:
             ship = ship + 1
             if ship > 9:
                 ship = 0
+    if cp.switch:
+        while cp.switch:
+            clearplanets()
+            time.sleep(.5)
+        state=move
+        speed=0
+    time.sleep(.1)
