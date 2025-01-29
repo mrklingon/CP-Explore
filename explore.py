@@ -100,13 +100,9 @@ state = move
 ship = 0
 
 while True:
-    if cp.shake(shake_threshold=15):
-        cp.pixels.fill((0,100,0))
-        time.sleep(1)
-        print("reset")
-        initUni(100)
-
     
+
+
     if state == explore:
 #        clearplanets()
         orrery()
@@ -147,7 +143,7 @@ while True:
         if val == 2:
             speed = speed - 1
             time.sleep(.1)
-        loc = ((loc + speed) + dia)%dia 
+        loc = ((loc + speed) + dia)%dia
 
     if state == stop:
         save = cp.pixels[ship]
@@ -164,8 +160,13 @@ while True:
                 ship = 0
     if cp.switch:
         while cp.switch:
-            clearplanets()
-            time.sleep(.5)
+            clearplanets()  
+            if cp.shake(shake_threshold=10) :
+                cp.pixels.fill((0,100,0))
+                time.sleep(1)
+                print("reset")
+                initUni(100)
+                time.sleep(.5)
         state=move
         speed=0
     time.sleep(.1)
