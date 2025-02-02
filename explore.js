@@ -31,11 +31,15 @@ function mkSys (star: number, sysn: number) {
     period = [val / 2, val, val * 1.5, val * 4]
 }
 input.onGesture(Gesture.Shake, function () {
-    music.baDing.play()
-    speed = 0
-    mkUni(d)
-    state = travel
-    shoSector(loct)
+    if (!(input.switchRight())) {
+        light.setAll(0x00ff00)
+        speed = 0
+        mkUni(d)
+        pause(500)
+        light.setAll(0x00ff00)
+        state = travel
+        shoSector(loct)
+    }
 })
 function showPlanets () {
     light.setAll(0x000000)
@@ -72,9 +76,10 @@ input.buttonA.onEvent(ButtonEvent.Click, function () {
         }
     }
 })
-input.pinA1.onEvent(ButtonEvent.Click, function () {
-    music.playTone(523, music.beat(BeatFraction.Eighth))
+input.onSwitchMoved(SwitchDirection.Right, function () {
     speed = 0
+    state = travel
+    shoSector(loct)
 })
 input.buttonsAB.onEvent(ButtonEvent.Click, function () {
     speed = 0
@@ -125,23 +130,28 @@ state = travel
 let states = [travel, stop, insys]
 let days = [33, 69, 100, 150]
 forever(function () {
-    if (state == travel) {
-        if (0 != speed) {
-            loct = (loct + (d + speed)) % d
+    if (input.switchRight()) {
+        if (state == travel) {
+            if (0 != speed) {
+                loct = (loct + (d + speed)) % d
+                shoSector(loct)
+                pause(200)
+            }
+        }
+        if (state == stop) {
+            light.setPixelColor(ship, light.rgb(23, 23, 23))
+            pause(100)
             shoSector(loct)
             pause(200)
         }
-    }
-    if (state == stop) {
-        light.setPixelColor(ship, light.rgb(23, 23, 23))
-        pause(100)
-        shoSector(loct)
-        pause(200)
-    }
-    if (state == insys) {
-        val = loct + ship
-        mkSys(cosmos[val], sys[val])
-        orrery()
-        shoSector(loct)
+        if (state == insys) {
+            val = loct + ship
+            mkSys(cosmos[val], sys[val])
+            orrery()
+            shoSector(loct)
+        }
+    } else {
+        light.setAll(0x000000)
+        pause(1000)
     }
 })
