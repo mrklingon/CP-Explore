@@ -1,4 +1,4 @@
 # Galaxy Explorer
 
-* explorer.js
-* explorer.py
+* explore.js
+* explore.py
