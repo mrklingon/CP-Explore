@@ -76,6 +76,10 @@ input.buttonA.onEvent(ButtonEvent.Click, function () {
         }
     }
 })
+input.onSwitchMoved(SwitchDirection.Left, function () {
+    light.setAll(0x000000)
+    state = travel
+})
 input.onSwitchMoved(SwitchDirection.Right, function () {
     speed = 0
     state = travel
