@@ -11,8 +11,9 @@ The program has three states:
 **stop**    - choose a star displayed on the ten neopixels  
 **explore** - goes into *orrery* mode showing the planets in the chosen star-system  
 
-When in **travel** state, the **A** and **B** buttons increase the movement of the stars. A: clockwise, B: counter-clockwise. Multiple clicks increase the speed.  
-When in **stop** state, the **A** and **B** buttons move a blinking white pixel to select a star. A:move counter-clockwise, and B:clockwise.   
+When in **travel** state, the **A** and **B** buttons increase the speed of the movement of the stars. A: clockwise, B: counter-clockwise. Multiple clicks increase the speed.  
+
+When in **stop** state, the **A** and **B** buttons move a blinking white pixel to select a star. A:move counter-clockwise, and B:clockwise. (yes, the opposite of **travel** mode).  
 
 Change state by pressing **A+B** - state cycles from *travel* to *stop* to *explore* and back to *travel*.  In **stop** mode, you cannot move to **explore** unless the blinking pixel is on one of the stars.
 
@@ -21,6 +22,8 @@ At any point, shifting the *switch* to the left, turns off all the neopixels and
 When the switch is shifted to the left, **shaking* the CPX will show all neopixels in green and generate a new galaxy.
 
 Both versions, CircuitPython or Makecode work the same.
+
+The generation of the galaxy creates two 100 element arrays. One defines the stars, and the other the "type" of solar system. When in **explore** mode, the defined colors and speed of the planets is set based on an algorithm.
 
 
 **Files**
