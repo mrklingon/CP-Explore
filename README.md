@@ -19,7 +19,7 @@ Change state by pressing **A+B** - state cycles from *travel* to *stop* to *expl
 
 At any point, shifting the *switch* to the left, turns off all the neopixels and switches the system to **travel** mode.
 
-When the switch is shifted to the left, **shaking* the CPX will show all neopixels in green and generate a new galaxy.
+When the switch is shifted to the left, *shaking* the CPX will show all neopixels in green and generate a new galaxy.
 
 Both versions, CircuitPython or Makecode work the same.
 
